@@ -19,6 +19,9 @@
     <h2>Datos Encriptados:</h2>
     <p id="encryptedData"></p>
 
+    <h2>Datos Desencriptados:</h2>
+    <p id="decryptedData"></p>
+
     <script>
         const secretKey = CryptoJS.lib.WordArray.random(16).toString(); // Clave AES de 16 bytes
 
@@ -31,10 +34,18 @@
             // Encriptar la contraseña
             const encryptedPassword = CryptoJS.AES.encrypt(password, secretKey).toString();
 
-            // Mostrar los datos encriptados
+            // Desencriptar la contraseña
+            const decryptedBytes = CryptoJS.AES.decrypt(encryptedPassword, secretKey);
+            const decryptedPassword = decryptedBytes.toString(CryptoJS.enc.Utf8);
+
+            // Mostrar los datos encriptados y desencriptados
             document.getElementById('encryptedData').innerHTML = `
                 <strong>Clave AES:</strong> ${secretKey}<br>
                 <strong>Contraseña Encriptada:</strong> ${encryptedPassword}
+            `;
+
+            document.getElementById('decryptedData').innerHTML = `
+                <strong>Contraseña Desencriptada:</strong> ${decryptedPassword}
             `;
         });
     </script>
